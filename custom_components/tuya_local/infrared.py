@@ -70,9 +70,9 @@ class TuyaLocalInfrared(TuyaLocalEntity, InfraredEmitterEntity):
 
         start = 0
         for s, t in split.items():
-            tuya_command = IR.pulses_to_base64(raw[start:s])
+            tuya_command = IR.pulses_to_base64(raw[start : s + 1])
             _LOGGER.info("%s sending command: %s", self._config.config_id, tuya_command)
-            start = s
+            start = s + 1
             await self._ir_send(tuya_command)
             await asyncio.sleep(t / 1000000.0)
         if start < len(raw):
